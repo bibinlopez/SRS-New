@@ -21,11 +21,31 @@ const showCurrentUser = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-   res.send('udpate user')
+   const { email, name } = req.body
+   if (!email || !name) {
+      throw new CustomAPIError('Please provide email and password')
+   }
+   const user = await User.findOneAndUpdate({ _id: req.user.userId }, { email, name }, { new: true, runValidators: true })
+   return res.status(200).json({ data: user })
 }
 
-const deleteUser = async (req, res) => {
-   res.send('delete user')
+
+const updateUserPassword = async (req, res) => {
+   const { currentPassword, newPassword } = req.body
+   if (!currentPassword || !newPassword) {
+      throw new CustomAPIError('Please provide email and password', 400)
+   }
+   const user = await User.findOne({ _id: req.user.userId })
+   const isPasswordCorrect = await user.comparePassword(currentPassword)
+
+   if (!isPasswordCorrect) {
+      throw new CustomAPIError('incorrect Current password', 401)
+   }
+   user.password = newPassword;
+   await user.save()
+   return res.status(200).json({ msg: 'Success!!! Password updated.' })
+
+
 }
 
 
@@ -34,5 +54,5 @@ module.exports = {
    getSingleUser,
    showCurrentUser,
    updateUser,
-   deleteUser
+   updateUserPassword
 }

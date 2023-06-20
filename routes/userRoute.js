@@ -14,7 +14,7 @@ const {
    getSingleUser,
    showCurrentUser,
    updateUser,
-   deleteUser
+   updateUserPassword
 } = require('../controllers/userController')
 
 
@@ -22,7 +22,7 @@ router.get('/getAllUser', authMiddleware, authPermission, getAllUser)
 router.get('/getSingleUser/:id', authMiddleware, authPermission, getSingleUser)
 router.get('/showMe', authMiddleware, showCurrentUser)
 router.patch('/updateUser', authMiddleware, updateUser)
-router.delete('/deleteUser', authMiddleware, deleteUser)
+router.patch('/updateUserPassword', authMiddleware, updateUserPassword)
 
 
 
