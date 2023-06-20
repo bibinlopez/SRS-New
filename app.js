@@ -13,6 +13,7 @@ const connectDB = require('./db/connect')
 
 const authRoute = require('./routes/authRoute')
 const userRoute = require('./routes/userRoute')
+const productRoute = require('./routes/productRoute')
 
 //middlewares
 const notFound = require('./middlewares/not-found')
@@ -24,6 +25,7 @@ app.use(express.json())
 
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/user', userRoute)
+app.use('/api/v1/product', productRoute)
 
 app.get('/', (req, res) => {
    res.send('coffe-shop-api')

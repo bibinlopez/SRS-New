@@ -1,71 +1,37 @@
 
 
-const mongoose = require('mongoose')
+const createProduct = async (req, res) => {
+   res.send('create product')
+}
 
-const ProductSchema = new mongoose.Schema({
-   name: {
-      type: String,
-      trim: true,
-      required: [true, 'Please provide product name'],
-      maxlength: [100, 'Nmae can not be more than 100 characters']
-   },
-   price: {
-      type: Number,
-      required: [true, 'Please provide product price'],
-      default: 0
-   },
-   description: {
-      type: String,
-      required: [true, 'Please provide product name'],
-      maxlength: [1000, 'Nmae can not be more than 100 characters']
-   },
+const getAllProduct = async (req, res) => {
+   res.send('get all  product')
+}
 
-   image: {
-      type: String,
-      default: 'https://res.cloudinary.com/dzoy3xghm/image/upload/v1687270612/default-product-image_ysgdll.png'
-   },
-   category: {
-      type: String,
-      required: [true, 'Please provide product category'],
-      enum: ['office', 'kitchen', 'bedroom'],
-   },
-   company: {
-      type: String,
-      required: [true, 'Please provide company'],
-      enum: {
-         values: ['ikea', 'liddy', 'marcos'],
-         massage: '{VALUE} is not supported'
-      }
-   },
-   colors: {
-      type: [String],
-      required: true
-   },
-   featured: {
-      type: Boolean,
-      default: false,
-   },
-   freeShipping: {
-      type: Boolean,
-      default: false
-   },
-   inventory: {
-      type: Number,
-      required: true,
-      default: 15,
-   },
-   averageRating: {
-      type: Number,
-      default: 0
-   },
-   user: {
-      type: mongoose.Types.ObjectId,
-      ref: 'User',
-      required: true
-   }
-}, { timestamps: true })
+
+const getSingleProduct = async (req, res) => {
+   res.send('get single product')
+}
+
+const updateProduct = async (req, res) => {
+   res.send('update product')
+}
+
+const deleteProduct = async (req, res) => {
+   res.send('delete product')
+}
+
+const uploadImage = async (req, res) => {
+   res.send('upload image')
+}
 
 
 
-
-module.exports = mongoose.model('Product', ProductSchema)
+module.exports = {
+   createProduct,
+   getAllProduct,
+   getSingleProduct,
+   updateProduct,
+   deleteProduct,
+   uploadImage
+}
