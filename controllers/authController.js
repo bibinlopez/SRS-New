@@ -32,6 +32,15 @@ const login = async (req, res) => {
       throw new CustomAPIError('Account does not exist email address', 404)
    }
 
+   const isMatch = await user.comparePassword(password)
+   if (!isMatch) {
+      throw new CustomAPIError('incorrect password', 401)
+   }
+
+   const token = user.createJWT()
+
+   res.status(StatusCodes.CREATED).json({ msg: 'User Created!!!', data: user, token })
+
 }
 
 
