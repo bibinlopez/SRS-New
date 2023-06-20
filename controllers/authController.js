@@ -44,13 +44,10 @@ const login = async (req, res) => {
 }
 
 
-const logout = async (req, res) => {
-   res.send('logout route');
-}
 
 
 module.exports = {
-   register, login,
-   logout
+   register,
+   login
 }
 
