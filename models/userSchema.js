@@ -3,7 +3,10 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 
 const userSchema = new mongoose.Schema({
-   name: String,
+   name: {
+      type: String,
+      required: [true, 'Please provide Name']
+   },
    email: {
       type: String,
       required: [true, 'Please provide name'],
@@ -12,14 +15,16 @@ const userSchema = new mongoose.Schema({
          message: 'Please provide valid email'
       },
    },
-   password: String,
+   password: {
+      type: String,
+      required: [true, 'Please Provide Password']
+   },
    role: {
       type: String,
       enum: ['admin', 'user'],
       default: 'user'
    }
 }, { timestamps: true })
-
 
 
 

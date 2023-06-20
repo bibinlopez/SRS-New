@@ -33,7 +33,6 @@ app.use(errorHandlerMiddleware)
 
 
 
-
 const port = 3000;
 
 const start = async () => {
