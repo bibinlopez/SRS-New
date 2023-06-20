@@ -39,7 +39,7 @@ const login = async (req, res) => {
 
    const token = user.createJWT()
 
-   res.status(StatusCodes.CREATED).json({ msg: 'User Created!!!', data: user, token })
+   res.status(StatusCodes.CREATED).json({ data: user, token })
 
 }
 

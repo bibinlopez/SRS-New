@@ -42,7 +42,7 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 }
 
 userSchema.methods.createJWT = function () {
-   return jwt.sign({ userId: this._id, username: this.name }, process.env.JWT, { expiresIn: '30d' })
+   return jwt.sign({ role: this.role, userId: this._id, username: this.name }, process.env.JWT, { expiresIn: '30d' })
 }
 
 
