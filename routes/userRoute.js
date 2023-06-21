@@ -18,11 +18,11 @@ const {
 } = require('../controllers/userController')
 
 
-router.get('/getAllUser', authMiddleware, authPermission, getAllUser)
-router.get('/getSingleUser/:id', authMiddleware, authPermission, getSingleUser)
-router.get('/showMe', authMiddleware, showCurrentUser)
-router.patch('/updateUser', authMiddleware, updateUser)
-router.patch('/updateUserPassword', authMiddleware, updateUserPassword)
+router.get('/getAllUser', authMiddleware, authPermission, getAllUser)            // admin route
+router.get('/getSingleUser/:id', authMiddleware, authPermission, getSingleUser)  // admin route
+router.get('/showMe', authMiddleware, showCurrentUser)                           // user route
+router.post('/updateUser', authMiddleware, updateUser)                          // user route
+router.post('/updateUserPassword', authMiddleware, updateUserPassword)          // user route
 
 
 

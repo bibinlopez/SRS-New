@@ -17,6 +17,10 @@ const getCurrentUserOrders = async (req, res) => {
    res.send('getCurrentUserOrders')
 }
 
+const showMyOrders = async (req, res) => {
+   res.send('showMyOrders')
+}
+
 
 const createOrder = async (req, res) => {
    res.send('createOrder')
@@ -31,6 +35,7 @@ module.exports = {
    getAllOrders,
    getSingleOrder,
    getCurrentUserOrders,
+   showMyOrders,
    createOrder,
    udpdateOrder
 }

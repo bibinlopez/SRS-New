@@ -20,12 +20,12 @@ const {
 router.post('/create', authMiddleware, authPermission, createProduct)
 router.get('/getAll', getAllProduct)
 
-router.post('/uploadImage', authMiddleware, authPermission, uploadImage)
+router.post('/uploadImage', authMiddleware, authPermission, uploadImage)      // admin route
 
 
 router.get('/getSingle/:id', getSingleProduct)
-router.post('/update/:id', authMiddleware, authPermission, updateProduct)
-router.post('/delete/:id', authMiddleware, authPermission, deleteProduct)
+router.post('/update/:id', authMiddleware, authPermission, updateProduct)     // admin route 
+router.post('/delete/:id', authMiddleware, authPermission, deleteProduct)     // admin route
 
 
 
