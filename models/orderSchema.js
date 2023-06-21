@@ -1,7 +1,7 @@
 
 const mongoose = require('mongoose')
 
-const SingleOrderItems = mongoose.Schema({
+const SingleOrderItems = new mongoose.Schema({
    name: { type: String, required: true },
    Image: { type: String, required: true },
    price: { type: String, required: true },
@@ -13,7 +13,7 @@ const SingleOrderItems = mongoose.Schema({
    }
 })
 
-const OrderSchema = mongoose.Schema({
+const OrderSchema = new mongoose.Schema({
    shippingFee: {
       type: Number,
       required: true,
@@ -47,4 +47,4 @@ const OrderSchema = mongoose.Schema({
 
 
 
-module.exports = mongoose.Schema('Order', OrderSchema)
+module.exports = mongoose.model('Order', OrderSchema)
