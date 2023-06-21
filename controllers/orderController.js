@@ -3,6 +3,7 @@
 const Order = require('../models/orderSchema')
 const Product = require('../models/productSchema')
 const { CustomAPIError } = require('../errors/custom-error')
+const checkPermission = require('../utils/checkPermissions')
 
 const fakeStripeAPI = async ({ amount, currency }) => {
    const client_secret = 'someRanddomValue';
@@ -11,7 +12,6 @@ const fakeStripeAPI = async ({ amount, currency }) => {
 
 const createOrder = async (req, res) => {
    const { items: cartItems, shippingFee, paymentMode } = req.body;
-
    if (!cartItems || cartItems.length < 1) {
       throw new CustomAPIError('No cart items provided', 400)
    }
@@ -66,32 +66,48 @@ const createOrder = async (req, res) => {
 
    const result = await order.save()
 
-   res.status(201).json({ result, clientSecret: order.clientSecret })
+   res.status(201).json({ data: result, clientSecret: order.clientSecret })
 
 }
 
 
 const getAllOrders = async (req, res) => {
-   res.send('get All Orders')
+   const order = await Order.find({}).populate('user')
+   return res.status(200).json({ data: order })
 }
 
 
 const getSingleOrder = async (req, res) => {
-   res.send('getSigleOrder')
+   const order = await Order.findById(req.params.id).populate('user')
+   if (!order) {
+      throw new CustomAPIError(`No order with the id: ${req.params.id}`, 404)
+   }
+   checkPermission(req.user, order.user._id)
+
+   return res.status(200).json({ data: order })
 }
 
 
 const getUserOrders = async (req, res) => {
-   res.send('getCurrentUserOrders')
+   const order = await Order.find({ user: req.params.id }).populate('user')
+   if (!order) {
+      throw new CustomAPIError(`No order with the id: ${req.params.id}`, 404)
+   }
+   return res.status(200).json({ data: order, count: order.length })
 }
 
 const showMyOrders = async (req, res) => {
-   res.send('showMyOrders')
+   const order = await Order.find({ user: req.user.userId })
+   return res.status(200).json({ data: order, count: order.length })
 }
 
 
 const udpdateOrder = async (req, res) => {
-   res.send('udpdateOrder')
+   const order = await Order.find({ user: req.params.id })
+   if (!order) {
+      throw new CustomAPIError(`No order with the id: ${req.params.id}`, 404)
+   }
+
 }
 
 module.exports = {
