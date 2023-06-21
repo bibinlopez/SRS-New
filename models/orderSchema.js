@@ -3,8 +3,8 @@ const mongoose = require('mongoose')
 
 const SingleOrderItems = new mongoose.Schema({
    name: { type: String, required: true },
-   Image: { type: String, required: true },
-   price: { type: String, required: true },
+   image: { type: String, required: true },
+   price: { type: Number, required: true },
    quantity: { type: Number, required: true },
    product: {
       type: mongoose.Types.ObjectId,
@@ -31,6 +31,11 @@ const OrderSchema = new mongoose.Schema({
       type: String,
       enum: ['pending', 'failed', 'paid', 'delivered', 'canceled'],
       default: 'pending'
+   },
+   paymentMode: {
+      type: String,
+      enum: ['cashOnDelivery', 'online'],
+      default: 'cashOnDelivery'
    },
    user: {
       type: mongoose.Types.ObjectId,
