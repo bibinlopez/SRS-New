@@ -17,12 +17,15 @@ const {
 } = require('../controllers/productController')
 
 
-router.post('/createProduct', authMiddleware, authPermission, createProduct)
-router.get('/getAllProduct', getAllProduct)
-router.get('/getSingleProduct/:id', getSingleProduct)
-router.patch('/updateProduct', authMiddleware, authPermission, updateProduct)
-router.delete('/deleteProduct', authMiddleware, authPermission, deleteProduct)
+router.post('/', authMiddleware, authPermission, createProduct)
+router.get('/', getAllProduct)
+
 router.post('/uploadImage', authMiddleware, authPermission, uploadImage)
+
+
+router.get('/:id', getSingleProduct)
+router.patch('/', authMiddleware, authPermission, updateProduct)
+router.delete('/', authMiddleware, authPermission, deleteProduct)
 
 
 

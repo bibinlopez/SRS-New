@@ -1,7 +1,12 @@
 
+const Product = require('../models/productSchema')
+const CustomAPIError = require('../errors/custom-error')
 
 const createProduct = async (req, res) => {
-   res.send('create product')
+   req.body.user = req.user.userId;
+   const product = new Product(req.body)
+   const result = await product.save()
+   return res.status(201).json({ result })
 }
 
 const getAllProduct = async (req, res) => {
