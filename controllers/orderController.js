@@ -103,10 +103,26 @@ const showMyOrders = async (req, res) => {
 
 
 const udpdateOrder = async (req, res) => {
-   const order = await Order.find({ user: req.params.id })
+   const { orderStatus: status } = req.body
+   const order = await Order.findById(req.params.id)
    if (!order) {
       throw new CustomAPIError(`No order with the id: ${req.params.id}`, 404)
    }
+
+   checkPermission(req.user, order.user._id)
+   // console.log(status);
+   if (req.user.role === 'user') {
+      if (status !== 'canceled') {
+         throw new CustomAPIError('You can only change the status into Canceled', 401)
+      }
+      order.status = status;
+      await order.save();
+      return res.status(200).json({ msg: 'Your cancellation request registered successfully!!!' })
+   }
+
+   order.status = status;
+   await order.save();
+   return res.status(200).json({ msg: 'Your cancellation request registered successfully!!!' })
 
 }
 

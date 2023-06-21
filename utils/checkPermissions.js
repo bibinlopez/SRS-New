@@ -8,9 +8,9 @@ const checkPermission = (validUser, checkUser) => {
    // console.log(checkUser)
    // console.log(typeof checkUser)
 
-   if (validUser.userId === 'admin') return;
+   if (validUser.role === 'admin') return;
    if (validUser.userId === checkUser.toString()) return;
-   throw new CustomAPIError('Unauthorized to access this route', 403)
+   throw new CustomAPIError('Unauthorized to access this route', 401)
 
 }
 
