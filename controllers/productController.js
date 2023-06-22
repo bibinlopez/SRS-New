@@ -3,21 +3,21 @@ const Product = require('../models/productSchema')
 const { CustomAPIError } = require('../errors/custom-error')
 
 const createProduct = async (req, res) => {
-   req.body.user = req.user.userId;
+   req.body.admin = req.user.userId;
    const product = new Product(req.body)
    const result = await product.save()
    return res.status(201).json({ data: result })
 }
 
 const getAllProduct = async (req, res) => {
-   const product = await Product.find({})
+   const product = await Product.find({}).populate({ path: 'admin', select: '_id name' })
    return res.status(200).json({ count: product.length, data: product })
 }
 
 
 const getSingleProduct = async (req, res) => {
    const { productId: id } = req.body
-   const product = await Product.findById(id).populate('admin')
+   const product = await Product.findById(id).populate({ path: 'admin', select: '_id name' })
    if (!product) {
       throw new CustomAPIError(`No product with the id: ${id}`, 404)
    }
