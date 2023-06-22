@@ -29,7 +29,7 @@ const OrderSchema = new mongoose.Schema({
    orderItems: [SingleOrderItems],
    status: {
       type: String,
-      enum: ['pending', 'failed', 'paid', 'delivered', 'canceled'],
+      enum: ['pending', 'failed', 'paid', 'delivered', 'canceled', 'cod'],
       default: 'pending'
    },
    paymentMode: {
@@ -51,5 +51,10 @@ const OrderSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 
+OrderSchema.pre('save', async function () {
+   if (this.paymentMode === 'cashOnDelivery') {
+      this.status = 'cod';
+   }
+})
 
 module.exports = mongoose.model('Order', OrderSchema)
