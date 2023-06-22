@@ -5,8 +5,10 @@ const { StatusCodes } = require('http-status-codes')
 const { CustomAPIError } = require('../errors/custom-error')
 
 const register = async (req, res) => {
-   const { email } = req.body
-   console.log(email);
+   const { email, name, mobileNumber, dob, password } = req.body
+   if (!email || !name || !mobileNumber || !dob || !password) {
+      throw new CustomAPIError('Please provide credentials', 400)
+   }
    const user1 = await User.findOne({ email })
    if (user1) {
       throw new CustomAPIError('Provided email already exist', 404)
@@ -14,9 +16,17 @@ const register = async (req, res) => {
 
    const isFirstAccount = (await User.countDocuments({})) === 0
    const role = isFirstAccount ? 'admin' : 'user';
-   req.body.role = role
+   // req.body.role = role
+   const data = {
+      name,
+      email,
+      number: +mobileNumber,
+      dob,
+      role,
+      password
+   }
 
-   const user = new User(req.body);
+   const user = new User(data);
    const result = await user.save()
    res.status(StatusCodes.CREATED).json({ msg: 'User Created!!!', data: result })
 }

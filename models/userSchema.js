@@ -22,6 +22,14 @@ const userSchema = new mongoose.Schema({
       type: String,
       required: [true, 'Please Provide Password']
    },
+   number: {
+      type: Number,
+      required: [true, 'Please Provide Mobile Number']
+   },
+   dob: {
+      type: Date,
+      required: [true, 'Please Provide dob']
+   },
    role: {
       type: String,
       enum: ['admin', 'user'],
