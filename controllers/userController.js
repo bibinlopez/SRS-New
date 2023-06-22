@@ -7,9 +7,14 @@ const getAllUser = async (req, res) => {
 }
 
 const getSingleUser = async (req, res) => {
-   const user = await User.findOne({ _id: req.params.id }).select('-password')
+   const { userId: id } = req.body
+   if (!id) {
+      console.log('no id provided');
+      throw new CustomAPIError('No id Provided', 400)
+   }
+   const user = await User.findById(id).select('-password')
    if (!user) {
-      throw new CustomAPIError(`No user found in the id: ${req.params.id}`)
+      throw new CustomAPIError(`No user found in the id: ${id}`, 404)
    }
    return res.status(200).json({ data: user })
 }
@@ -23,7 +28,7 @@ const showCurrentUser = async (req, res) => {
 const updateUser = async (req, res) => {
    const { email, name } = req.body
    if (!email || !name) {
-      throw new CustomAPIError('Please provide email and password')
+      throw new CustomAPIError('Please provide email and password', 400)
    }
    const user = await User.findOneAndUpdate({ _id: req.user.userId }, { email, name }, { new: true, runValidators: true })
    return res.status(200).json({ data: user })

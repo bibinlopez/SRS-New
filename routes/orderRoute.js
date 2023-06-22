@@ -19,13 +19,13 @@ router.post('/create', authMiddleware, createOrder)                  // user onl
 
 router.get('/getAll', authMiddleware, authPermission, getAllOrders)  // admin route
 
-router.get('/getSingle/:id', authMiddleware, getSingleOrder)         // user/admin route
+router.post('/getSingle', authMiddleware, getSingleOrder)         // user/admin route
 
-router.get('/getAllUser/:id', authMiddleware, authPermission, getUserOrders)  // admin route
+router.post('/getAllUser', authMiddleware, authPermission, getUserOrders)  // admin route
 router.get('/showOrders', authMiddleware, showMyOrders)                // user only
 
 router.post(
-   '/update/:id', authMiddleware, udpdateOrder                       // user/admin route    
+   '/update', authMiddleware, udpdateOrder                       // user/admin route    
 )                                                                    // admin and user can change the order status.ie, admin:-delivered/cancel   user:- cancel 
 
 

@@ -72,15 +72,16 @@ const createOrder = async (req, res) => {
 
 
 const getAllOrders = async (req, res) => {
-   const order = await Order.find({}).populate('user')
-   return res.status(200).json({ data: order })
+   const order = await Order.find({}).populate({ path: 'user', select: '_id name email' })
+   return res.status(200).json({ count: order.length, data: order })
 }
 
 
 const getSingleOrder = async (req, res) => {
-   const order = await Order.findById(req.params.id).populate('user')
+   const { orderId: id } = req.body
+   const order = await Order.findById(id).populate({ path: 'user', select: '_id name email' })
    if (!order) {
-      throw new CustomAPIError(`No order with the id: ${req.params.id}`, 404)
+      throw new CustomAPIError(`No order with the id: ${id}`, 404)
    }
    checkPermission(req.user, order.user._id)
 
@@ -89,11 +90,12 @@ const getSingleOrder = async (req, res) => {
 
 
 const getUserOrders = async (req, res) => {
-   const order = await Order.find({ user: req.params.id }).populate('user')
+   const { userId: id } = req.body
+   const order = await Order.find({ user: id }).populate({ path: 'user', select: 'name _id' })
    if (!order) {
       throw new CustomAPIError(`No order with the id: ${req.params.id}`, 404)
    }
-   return res.status(200).json({ data: order, count: order.length })
+   return res.status(200).json({ count: order.length, data: order })
 }
 
 const showMyOrders = async (req, res) => {
@@ -103,10 +105,10 @@ const showMyOrders = async (req, res) => {
 
 
 const udpdateOrder = async (req, res) => {
-   const { orderStatus: status } = req.body
-   const order = await Order.findById(req.params.id)
+   const { orderStatus: status, orderId: id } = req.body
+   const order = await Order.findById(id)
    if (!order) {
-      throw new CustomAPIError(`No order with the id: ${req.params.id}`, 404)
+      throw new CustomAPIError(`No order with the id: ${id}`, 404)
    }
 
    checkPermission(req.user, order.user._id)
@@ -122,7 +124,7 @@ const udpdateOrder = async (req, res) => {
 
    order.status = status;
    await order.save();
-   return res.status(200).json({ msg: 'Your cancellation request registered successfully!!!' })
+   return res.status(200).json({ msg: 'status changed successfully!!!' })
 
 }
 

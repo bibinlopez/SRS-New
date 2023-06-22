@@ -19,7 +19,7 @@ const {
 
 
 router.get('/getAllUser', authMiddleware, authPermission, getAllUser)            // admin route
-router.get('/getSingleUser/:id', authMiddleware, authPermission, getSingleUser)  // admin route
+router.post('/getSingleUser', authMiddleware, authPermission, getSingleUser)  // admin route
 router.get('/showMe', authMiddleware, showCurrentUser)                           // user route
 router.post('/updateUser', authMiddleware, updateUser)                          // user route
 router.post('/updateUserPassword', authMiddleware, updateUserPassword)          // user route

@@ -11,14 +11,15 @@ const createProduct = async (req, res) => {
 
 const getAllProduct = async (req, res) => {
    const product = await Product.find({})
-   return res.status(200).json({ data: product, count: product.length })
+   return res.status(200).json({ count: product.length, data: product })
 }
 
 
 const getSingleProduct = async (req, res) => {
-   const product = await Product.findById(req.params.id).populate('user')
+   const { productId: id } = req.body
+   const product = await Product.findById(id).populate('admin')
    if (!product) {
-      throw new CustomAPIError(`No product with the id: ${req.params.id}`, 404)
+      throw new CustomAPIError(`No product with the id: ${id}`, 404)
    }
    return res.status(200).json({ data: product })
 }
