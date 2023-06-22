@@ -24,8 +24,8 @@ router.post('/uploadImage', authMiddleware, authPermission, uploadImage)      //
 
 
 router.post('/getSingle', getSingleProduct)
-router.post('/update/:id', authMiddleware, authPermission, updateProduct)     // admin route 
-router.post('/delete/:id', authMiddleware, authPermission, deleteProduct)     // admin route
+router.post('/update', authMiddleware, authPermission, updateProduct)     // admin route 
+router.post('/delete', authMiddleware, authPermission, deleteProduct)     // admin route
 
 
 

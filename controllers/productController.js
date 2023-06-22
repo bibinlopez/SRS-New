@@ -25,17 +25,19 @@ const getSingleProduct = async (req, res) => {
 }
 
 const updateProduct = async (req, res) => {
-   const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+   const { productId: id } = req.body
+   const product = await Product.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
    if (!product) {
-      throw new CustomAPIError(`No product with the id: ${req.params.id}`, 404)
+      throw new CustomAPIError(`No product with the id: ${id}`, 404)
    }
    return res.status(200).json({ data: product })
 }
 
 const deleteProduct = async (req, res) => {
-   const product = await Product.findById(req.params.id).populate('user')
+   const { productId: id } = req.body
+   const product = await Product.findById(id)
    if (!product) {
-      throw new CustomAPIError(`No product with the id: ${req.params.id}`, 404)
+      throw new CustomAPIError(`No product with the id: ${id}`, 404)
    }
    await product.deleteOne()
    return res.status(200).json({ msg: 'Product deleted!!!' })
