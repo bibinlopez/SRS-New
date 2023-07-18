@@ -6,6 +6,8 @@ const getAllUser = async (req, res) => {
    return res.status(200).json({ data: users, count: users.length })
 }
 
+
+
 const getSingleUser = async (req, res) => {
    const { userId: id } = req.body
    if (!id) {
@@ -24,6 +26,7 @@ const showCurrentUser = async (req, res) => {
 
    return res.status(200).json({ data: user })
 }
+
 
 const updateUser = async (req, res) => {
    const { email, name } = req.body

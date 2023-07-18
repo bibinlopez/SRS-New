@@ -30,7 +30,7 @@ app.use('/api/v1/product', productRoute)
 app.use('/api/v1/order', orderRoute)
 
 app.get('/', (req, res) => {
-   res.send('coffe-shop-api')
+   res.send('SmartRoadSales-shop-api')
    // throw new Error('hello there')
 })
 
